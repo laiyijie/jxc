@@ -2,10 +2,11 @@ from django.db import models
 
 
 class Category(models.Model):
-    name = models.CharField(max_length=127, unique=True)
+    name = models.CharField(max_length=127)
 
 
 class ProductInfo(models.Model):
+    category = models.ForeignKey(Category, on_delete=models.PROTECT)
     name = models.CharField(max_length=127, db_index=True)
     spec = models.CharField(max_length=127)
     unit = models.CharField(max_length=127)
@@ -13,4 +14,3 @@ class ProductInfo(models.Model):
     # statistic info
     price = models.IntegerField()
     total_count = models.IntegerField()
-    category = models.ForeignKey(Category, null=True, blank=True, on_delete=models.SET_NULL)

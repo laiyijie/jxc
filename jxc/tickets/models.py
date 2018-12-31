@@ -13,20 +13,28 @@ class ProductAction(models.Model):
 
     price = models.IntegerField()
     num = models.FloatField()
-    type = models.CharField(max_length=127, db_index=True)
+
+    class Meta:
+        abstract = True
+
+
+class ProductPurchaseAction(ProductAction):
+    pass
+
+
+class ProductSaleAction(ProductAction):
+    pass
 
 
 class TicketBasic(models.Model):
     id = models.BigAutoField(primary_key=True)
-    items = models.ManyToManyField(ProductAction)
     ticket_name = models.CharField(max_length=127, unique=True)
     create_time = models.DateTimeField(auto_now_add=True)
-    update_time = models.DateTimeField(auto_now_add=True, auto_now=True)
+    update_time = models.DateTimeField(auto_now=True)
     total_money = models.IntegerField()
     customer = models.ForeignKey(Customer, on_delete=models.PROTECT)
     discount = models.IntegerField(default=0)
     paid = models.IntegerField(default=0)
-    type = models.CharField(max_length=127, db_index=True)
 
     class Meta:
         abstract = True
@@ -34,9 +42,9 @@ class TicketBasic(models.Model):
 
 # 进货单
 class PurchaseTicket(TicketBasic):
-    pass
+    items = models.ManyToManyField(ProductPurchaseAction)
 
 
 # 出货单
 class SalesTicket(TicketBasic):
-    pass
+    items = models.ManyToManyField(ProductSaleAction)

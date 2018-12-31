@@ -33,6 +33,10 @@ LOGGING_LEVEL = os.environ.get("LOGGING_LEVEL", "INFO")
 
 INSTALLED_APPS = [
     'users.apps.UsersConfig',
+    'products.apps.ProductsConfig',
+    'customers.apps.CustomersConfig',
+    'repos.apps.ReposConfig',
+    'tickets.apps.TicketsConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
